@@ -1,31 +1,32 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-import Animated, { useSharedValue } from "react-native-reanimated";
+
 import { StatusBar } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/native";
+
+
 
 export default function WelcomeScreen() {
-  const ring1padding = useSharedValue(0);
 
-  useEffect(() => {
-    ring1padding.value=0;
-    setTimeout(() => ring1padding.value = withSpring(padding.value + hp(50)),100);
-  },[]);
+  const navigation = useNavigation();
 
+  useEffect(()=> {
+    setTimeout(()=> navigation.navigate('Home'),2500)
+  },[])
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
       <StatusBar style="light" />
 
-      <Animated.Image
+      <Image
         source={require("../../assets/images/welcomeImage.png")}
         style={{
-          width: hp(30),
+          width: hp(50),
           height: hp(60),
           top: 110,
-          padding: ring1padding,
         }}
       />
       <View className="flex items-center space-y-2">
@@ -47,6 +48,13 @@ export default function WelcomeScreen() {
           Your Culinary Adventure Begins Here!
         </Text>
       </View>
+
+      <View>
+        <TouchableOpacity style={{backgroundColor:"#FB773C",borderRadius:18, paddingVertical:18, width:140, color: "#F8EDED", alignItems:"center",top:140, fontWeight:"600"}}>
+            <Text>Let's Start</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
+

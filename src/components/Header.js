@@ -1,14 +1,13 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Header = ({headerText, headerIcon}) => {
   return (
-    <View>
-      <Text style={{color:"#FC6736"}}>{headerText }</Text>
-      <FontAwesome icon={headerIcon}  size={24} color="#FC6736"/>
+    <View style={{flexDirection:"row"}}>
+      <Text style={{color:"#FC6736", flex:1, fontSize: 22, fontWeight:"700"}}>{headerText }</Text>
+      <FontAwesome name={headerIcon}  size={24} color="#FC6736" />
     </View>
   )
 }

@@ -1,16 +1,16 @@
 import { View, Text, ScrollView, Image, TextInput } from "react-native";
-import React from "react";
+import React, {useState} from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import { t } from "react-native-tailwindcss";
 import Categories from "../components/Categories";
 
 export default function HomeScreen() {
+    const [activeCategory, setActiveCategory] = useState('Beef');
   return (
     <View className="flex-1 bg-white">
       <StatusBar style="dark" />
@@ -79,36 +79,43 @@ export default function HomeScreen() {
           </View>
         </SafeAreaView>
 
-        
-      <View
-        style={{
-          flexDirection: "row",
-          borderRadius: 32,
-          backgroundColor: "white",
-          width: hp(44),
-          height: hp(6),
-          left: 11,
-          top: 25,
-        }}
-      >
-        <TextInput
-          placeholder="Search any recipe"
-          placeholderTextColor={"gray"}
-          style={{ left: 20, fontSize: hp(2.1) }}
-          className="flex-1 text-base mb-1 pl-3 tracking-wider"
-        />
-        <View className="bg-white rounded-full p-3">
-          <Image
-            source={require("../../assets/images/search.png")}
-            style={{ height: hp(3), width: hp(3), top: hp(1.5), left: hp(24) }}
+        <View
+          style={{
+            flexDirection: "row",
+            borderRadius: 32,
+            backgroundColor: "white",
+            width: hp(44),
+            height: hp(6),
+            left: 11,
+            top: 25,
+          }}
+        >
+          <TextInput
+            placeholder="Search any recipe"
+            placeholderTextColor={"gray"}
+            style={{ left: 20, fontSize: hp(2.1) }}
+            className="flex-1 text-base mb-1 pl-3 tracking-wider"
           />
+          <View className="bg-white rounded-full p-3">
+            <Image
+              source={require("../../assets/images/search.png")}
+              style={{
+                height: hp(3),
+                width: hp(3),
+                top: hp(1.5),
+                left: hp(24),
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <View>
-        <Categories />
-      </View>
-      </ScrollView>
+        <View>
 
+          <View style={{top:hp(7), height:hp(19)}}>
+          <Categories activeCategory={activeCategory} setActiveCategory={setActiveCategory}   />
+          </View>
+         
+        </View>
+      </ScrollView>
     </View>
   );
 }

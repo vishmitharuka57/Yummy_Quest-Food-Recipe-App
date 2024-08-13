@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, Image, TextInput } from "react-native";
-import React, {useState} from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   widthPercentageToDP as wp,
@@ -8,9 +8,32 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { t } from "react-native-tailwindcss";
 import Categories from "../components/Categories";
+import FoodRecipes from "../components/FoodRecipes";
+import axios from 'axios';
+
 
 export default function HomeScreen() {
-    const [activeCategory, setActiveCategory] = useState('Beef');
+  const [activeCategory, setActiveCategory] = useState("Beef");
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getCategories = async () => {
+    try {
+      const response = await axios.get(
+        "https://themealdb.com/api/json/v1/1/categories.php"
+      );
+    //  console.log("got Categories: ", response.data);
+      if (response && response.data) {
+        setCategories(response.data.categories);
+      }
+    } catch (err) {
+      console.log("error: ", err.message);
+    }
+  };
+
   return (
     <View className="flex-1 bg-white">
       <StatusBar style="dark" />
@@ -109,11 +132,17 @@ export default function HomeScreen() {
           </View>
         </View>
         <View>
-
-          <View style={{top:hp(7), height:hp(19)}}>
-          <Categories activeCategory={activeCategory} setActiveCategory={setActiveCategory}   />
+          <View style={{ top: hp(7), height: hp(19) }}>
+          {categories.length>0 &&  <Categories
+              categories={categories}
+              activeCategory={activeCategory}
+              setActiveCategory={setActiveCategory}
+            /> }
           </View>
-         
+            <View>
+             <FoodRecipes />
+            </View>
+
         </View>
       </ScrollView>
     </View>
